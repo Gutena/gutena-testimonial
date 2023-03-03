@@ -65,6 +65,6 @@ If you like this plugin, consider exploring our other themes and plugins:
 == Changelog ==
 
 = 1.0.0 =
-Release Date: September 7, 2022
+Release Date: March 3, 2023
 
 * Initial Release on WordPress.org.
