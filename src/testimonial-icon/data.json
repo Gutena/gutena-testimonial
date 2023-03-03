@@ -1,0 +1,33 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "gutena/testimonial-icon",
+    "title": "Icon",
+    "category": "gutena",
+    "parent": [ "gutena/testimonial-item" ],
+    "description": "Testimonial Icon Block by Gutena",
+    "textdomain": "gutena-testimonial",
+    "supports": {
+        "html": false,
+        "spacing": {
+			"padding": true,
+			"margin": true
+		}
+    },
+    "attributes": {
+        "sliderIconShow": {
+            "type": "boolean"
+        },
+        "sliderIcon": {
+            "type": "string",
+            "default": "gutena-quote"
+        },
+        "sliderIconColor": {
+            "type": "string"
+        }
+    },
+    "usesContext": [
+        "gutenaTestimonialIconShow"
+    ],
+    "editorScript": "file:./index.js"
+}

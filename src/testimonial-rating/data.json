@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "gutena/testimonial-rating",
+    "title": "Rating",
+    "category": "gutena",
+    "parent": [ "gutena/testimonial-item" ],
+    "description": "Testimonial Icon Block by Gutena",
+    "textdomain": "gutena-testimonial",
+    "supports": {
+        "html": false,
+        "spacing": {
+			"padding": true,
+			"margin": true
+		}
+    },
+    "attributes": {
+        "hideRating": {
+            "type": "boolean",
+            "default": false
+        },
+        "numRating": {
+            "type": "number",
+            "default": 5
+        },
+        "iconColor": {
+            "type": "string"
+        },
+        "sliderRatingShow": {
+            "type": "boolean"
+        }
+    },
+    "usesContext": [
+        "gutenaTestimonialRatingShow"
+    ],
+    "editorScript": "file:./index.js"
+}

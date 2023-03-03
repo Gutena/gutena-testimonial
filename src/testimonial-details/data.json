@@ -1,0 +1,37 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 2,
+    "name": "gutena/testimonial-details",
+    "title": "Author Details",
+    "category": "gutena",
+    "parent": [ "gutena/testimonial-item" ],
+    "description": "Testimonial Details Block by Gutena",
+    "textdomain": "gutena-testimonial",
+    "supports": {
+        "html": false
+    },
+    "attributes": {
+        "imageData": {
+            "type": "object",
+            "default": {
+                "id": "",
+                "alt": "",
+                "size": "",
+                "url": ""
+            }
+        },
+        "name": {
+            "type": "string"
+        },
+        "position": {
+            "type": "string"
+        },
+        "imagePosition": {
+            "type": "string"
+        }
+    },
+    "usesContext": [
+        "gutenaTestimonialImagePosition"
+    ],
+    "editorScript": "file:./index.js"
+}
