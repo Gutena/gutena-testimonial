@@ -3,7 +3,7 @@ Contributors: expresstech, infosatech
 Tags: testimonial, review, testimonial slider, testimonials, client review
 Requires at least: 5.9
 Tested up to: 6.2
-Stable tag: 1.0.1
+Stable tag: 1.0.2
 Requires PHP: 5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -63,6 +63,11 @@ If you like this plugin, consider exploring our other themes and plugins:
 1. Activate Gutena Testimonial Slider from your Plugins page.
 
 == Changelog ==
+
+= 1.0.2 =
+Release Date: 4th April, 2023
+
+* Fixed: Error in the Site Editor.
 
 = 1.0.1 =
 Release Date: 4th April, 2023
