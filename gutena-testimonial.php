@@ -2,7 +2,7 @@
 /**
  * Plugin Name:     Gutena Testimonial Slider
  * Description:     Gutena Testimonial Slider block allows you to display client testimonial slider on websites. This plugin provides a user-friendly interface to add, manage, and display testimonials in a visually appealing way.
- * Version:         1.0.0
+ * Version:         1.0.1
  * Author:          ExpressTech
  * Author URI:      https://expresstech.io
  * License:         GPL-2.0-or-later
@@ -31,7 +31,7 @@ if ( ! class_exists( 'Gutena_Testimonial' ) ) {
 		 *
 		 * @var string
 		 */
-		public $version = '1.0.0';
+		public $version = '1.0.1';
 
 		/**
 		 * Instance of this class.

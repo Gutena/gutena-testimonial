@@ -96,7 +96,11 @@
         },
         "sliderPlayDirection": {
             "type": "string",
-            "default": "backward"
+            "default": "forward"
+        },
+        "sliderTransitionSpeed": {
+            "type": "integer",
+            "default": 500
         },
         "sliderQuoteIconShow": {
             "type": "boolean",
@@ -169,6 +173,13 @@
                 "active": "#3F6DE4"
             }
         },
+        "sliderNavDotHide": {
+            "type": "object",
+            "default": {
+                "tablet": false,
+                "mobile": false
+            }
+        },
         "sliderNavArrow": {
             "type": "boolean",
             "default": true
@@ -190,6 +201,13 @@
             "default": {
                 "normal": "#000",
                 "hover": "#000"
+            }
+        },
+        "sliderNavArrowHide": {
+            "type": "object",
+            "default": {
+                "tablet": false,
+                "mobile": false
             }
         },
         "sliderTextFontFamily": {
@@ -276,7 +294,7 @@
         "gutenaTestimonialImagePosition": "sliderImagePosition"
     },
     "editorScript": "file:./index.js",
-    "script": "file:./view.js",
+    "viewScript": "file:./view.js",
     "editorStyle": "file:./index.css",
     "style": "file:./style-index.css"
 }

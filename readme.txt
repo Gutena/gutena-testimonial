@@ -1,9 +1,9 @@
 === Gutena Testimonial Slider ===
 Contributors: expresstech, infosatech
 Tags: testimonial, review, testimonial slider, testimonials, client review
-Requires at least: 5.8
+Requires at least: 5.9
 Tested up to: 6.1
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 Requires PHP: 5.6
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl.html
@@ -63,6 +63,16 @@ If you like this plugin, consider exploring our other themes and plugins:
 1. Activate Gutena Testimonial Slider from your Plugins page.
 
 == Changelog ==
+
+= 1.0.1 =
+Release Date: 4th April, 2023
+
+* Added: Option to hide Pagination Dots and Navigation Arrows for Tablet and mobile devices.
+* Added: Option to customize Slider Transition Speed.
+* Fixed: Tablet and Mobile Breakpoints calculation.
+* Fixed: Error in the Site Editor device type preview.
+* Minimum required WordPress version is now v5.9.
+* Tested with WordPress v6.2.
 
 = 1.0.0 =
 Release Date: March 3, 2023

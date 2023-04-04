@@ -28,7 +28,7 @@ document.addEventListener( 'DOMContentLoaded', () => {
             sliderData = merge( sliderData, settingsData )
         }
 
-        const slider = tns( applyFilters( 'gutenaTetimonials.settingsData', sliderData, index ) );
+        const slider = tns( applyFilters( 'gutenaTestimonial.settingsData', sliderData, index ) );
         gutenaTestimonialSliders.push( slider )
     } );
 } );
