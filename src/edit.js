@@ -3,7 +3,7 @@
  */
 import { __ } from '@wordpress/i18n';
 import { useSelect } from '@wordpress/data';
-import { useEffect } from '@wordpress/element';
+import { useEffect, useState } from '@wordpress/element';
 import { 
 	__experimentalFontFamilyControl as FontFamilyControl,
 	__experimentalFontAppearanceControl as FontAppearanceControl,
@@ -82,6 +82,7 @@ export default function edit( props ) {
         sliderAutoPlay,
         sliderPlayDirection,
         sliderAutoPlayInterval,
+        sliderTransitionSpeed,
         sliderQuoteIconShow, 
         sliderQuoteIconSize, 
         sliderQuoteIconColor,
@@ -98,11 +99,13 @@ export default function edit( props ) {
         sliderNavDotGap,
         sliderNavDotSpace,
         sliderNavDotColors,
+        sliderNavDotHide,
         sliderNavArrow,
         sliderNavArrowSize,
         sliderNavArrowSpace,
         sliderNavArrowPosition,
         sliderNavArrowColors,
+        sliderNavArrowHide,
         sliderTextFontFamily,
         sliderTextFontSize,
         sliderTextFontStyle,
@@ -128,9 +131,26 @@ export default function edit( props ) {
         sliderSettings 
     } = attributes
 
+    const [ showNavDot, canShowNavDot ] = useState( sliderNavDot )
+    const [ showNavArrow, canShowNavArrow ] = useState( sliderNavArrow )
+
     const deviceType = useSelect( select => {
-        return select( 'core/edit-post' ).__experimentalGetPreviewDeviceType();
+        const editor = select( 'core/edit-post' ) || select( 'core/edit-site' );
+        return editor.__experimentalGetPreviewDeviceType();
     }, [] );
+
+    useEffect( () => {
+        if ( deviceType === 'Tablet' ) {
+            canShowNavDot( ! sliderNavDotHide?.tablet )
+            canShowNavArrow( ! sliderNavArrowHide?.tablet )
+        } else if ( deviceType === 'Mobile' ) {
+            canShowNavDot( ! sliderNavDotHide?.mobile )
+            canShowNavArrow( ! sliderNavArrowHide?.mobile )
+        } else if ( deviceType === 'Desktop' ) {
+            canShowNavDot( sliderNavDot )
+            canShowNavArrow( sliderNavArrow )
+        }
+    }, [ deviceType, sliderNavDotHide, sliderNavArrowHide ] )
 
     const { innerBlocksCount } = useSelect(
 		( select ) => {
@@ -142,7 +162,7 @@ export default function edit( props ) {
 	);
 
     useEffect( () => {
-        setAttributes( { sliderCount: innerBlocksCount  } )
+        setAttributes( { sliderCount: innerBlocksCount } )
     }, [ innerBlocksCount ] )
 
     const blockProps = useBlockProps( {
@@ -341,6 +361,12 @@ export default function edit( props ) {
 				.gutena-testimonial-block-${ uniqueId } {
 					${ Object.entries( dynamicStyles ).map( ( [ k, v ] ) => `${ k }:${ v }` ).join( ';' ) }
 				}
+
+                .gutena-testimonial-block-${ uniqueId } .gutena-testimonial-slider-animate {
+					transition: transform ${ sliderTransitionSpeed / 1000 }s;
+                    transition-timing-function: cubic-bezier(.645,.045,.355,1);
+                    will-change: transform;
+				}
 			`}
 		</style>
 	);
@@ -355,21 +381,26 @@ export default function edit( props ) {
 
     // slider settings
     const settings = {
-        nav: sliderNavDot,
-        controls: sliderNavArrow,
         autoplay: sliderAutoPlay,
         autoplayTimeout: sliderAutoPlayInterval,
         autoplayDirection: sliderPlayDirection,
+        speed: sliderTransitionSpeed,
         responsive: {
-            640: {
+            300: {
+                nav: !sliderNavDotHide?.mobile,
+                controls: !sliderNavArrowHide?.mobile,
                 items: sliderToShow?.mobile,
                 gutter: sliderGutterWidth?.mobile ?? 5
             },
-            700: {
+            640: {
+                nav: !sliderNavDotHide?.tablet,
+                controls: !sliderNavArrowHide?.tablet,
                 items: sliderToShow?.tablet,
                 gutter: sliderGutterWidth?.tablet ?? 15
             },
-            900: {
+            1024: {
+                nav: sliderNavDot,
+                controls: sliderNavArrow,
                 items: sliderToShow?.desktop,
                 gutter: sliderGutterWidth?.desktop ?? 20
             }
@@ -519,8 +550,8 @@ export default function edit( props ) {
                     { sliderAutoPlay &&
                         <>
                             <ToggleGroupControl label={ __( 'Autoplay Direction', 'gutena-testimonial' ) } value={ sliderPlayDirection } onChange={ ( value ) => setAttributes( { sliderPlayDirection: value } ) } isBlock>
-                                <ToggleGroupControlOption value="backward" label={ __( 'Left to Right', 'gutena-testimonial' ) } />
-                                <ToggleGroupControlOption value="forward" label={ __( 'Right to Left', 'gutena-testimonial' ) } />
+                                <ToggleGroupControlOption value="forward" label={ __( 'Left to Right', 'gutena-testimonial' ) } />
+                                <ToggleGroupControlOption value="backward" label={ __( 'Right to Left', 'gutena-testimonial' ) } />
                             </ToggleGroupControl>
                             <RangeControl
                                 label={__( 'Autoplay Interval', 'gutena-testimonial' ) }
@@ -532,6 +563,14 @@ export default function edit( props ) {
                             />
                         </>
                     }
+                    <RangeControl
+                        label={__( 'Transition Speed', 'gutena-testimonial' ) }
+                        value={ sliderTransitionSpeed }
+                        onChange={ ( value ) => setAttributes( { sliderTransitionSpeed: value } ) }
+                        step={ 10 }
+                        min={ 100 }
+                        max={ 2000 }
+                    />
                 </PanelBody>
                 <PanelBody title={ __( 'Pagination Dots', 'gutena-testimonial' ) } initialOpen={ false }>
                     <ToggleControl
@@ -589,6 +628,26 @@ export default function edit( props ) {
                                     ] }
                                 />
                             </BaseControl>
+                            <ToggleControl
+                                label={ __( 'Hide on Tablet', 'gutena-testimonial' ) }
+                                checked={ sliderNavDotHide?.tablet }
+                                onChange={ () => setAttributes( { 
+                                    sliderNavDotHide: {
+                                        ...sliderNavDotHide,
+                                        tablet: ! sliderNavDotHide?.tablet
+                                    }
+                                } ) }
+                            />
+                            <ToggleControl
+                                label={ __( 'Hide on Mobile', 'gutena-testimonial' ) }
+                                checked={ sliderNavDotHide?.mobile }
+                                onChange={ () => setAttributes( { 
+                                    sliderNavDotHide: {
+                                        ...sliderNavDotHide,
+                                        mobile: ! sliderNavDotHide?.mobile
+                                    }
+                                } ) }
+                            />
                         </>
                     }
                 </PanelBody>
@@ -650,6 +709,26 @@ export default function edit( props ) {
                                     ] }
                                 />
                             </BaseControl>
+                            <ToggleControl
+                                label={ __( 'Hide on Tablet', 'gutena-testimonial' ) }
+                                checked={ sliderNavArrowHide?.tablet }
+                                onChange={ () => setAttributes( { 
+                                    sliderNavArrowHide: {
+                                        ...sliderNavArrowHide,
+                                        tablet: ! sliderNavArrowHide?.tablet
+                                    }
+                                } ) }
+                            />
+                            <ToggleControl
+                                label={ __( 'Hide on Mobile', 'gutena-testimonial' ) }
+                                checked={ sliderNavArrowHide?.mobile }
+                                onChange={ () => setAttributes( { 
+                                    sliderNavArrowHide: {
+                                        ...sliderNavArrowHide,
+                                        mobile: ! sliderNavArrowHide?.mobile
+                                    }
+                                } ) }
+                            />
                         </>
                     }
                 </PanelBody>
@@ -821,16 +900,16 @@ export default function edit( props ) {
                         interval={ sliderAutoPlayInterval }
                         playDirection={ sliderPlayDirection }
                     >
-                        <Slider className="gutena-testimonial-slider" data-slider-settings={ JSON.stringify( sliderSettings ) }>
+                        <Slider className="gutena-testimonial-slider" classNameAnimation="gutena-testimonial-slider-animate" data-slider-settings={ JSON.stringify( sliderSettings ) }>
                             { innerBlocksProps.children }
                         </Slider>
-                        { sliderNavArrow && 
+                        { showNavArrow && 
                             <>
                                 <ButtonBack className="carousel__button">{ __( 'Back', 'gutena-testimonial' ) }</ButtonBack>
                                 <ButtonNext className="carousel__button">{ __( 'Next', 'gutena-testimonial' ) }</ButtonNext>
                             </>
                         }
-                        { sliderNavDot && <DotGroup showAsSelectedForCurrentSlideOnly={ true } renderDots={ renderDots } /> }
+                        { showNavDot && <DotGroup showAsSelectedForCurrentSlideOnly={ true } renderDots={ renderDots } /> }
                     </CarouselProvider>
                 :   <div className="gutena-testimonial-slider" data-slider-settings={ JSON.stringify( sliderSettings ) }>
                         { innerBlocksProps.children }

@@ -37,7 +37,8 @@ const GutenaFontSizePicker = ( props ) => {
 
     //Get Device preview type
     const deviceType = useSelect( select => {
-        return select( "core/edit-post" ).__experimentalGetPreviewDeviceType();
+        const editor = select( 'core/edit-post' ) || select( 'core/edit-site' );
+        return editor.__experimentalGetPreviewDeviceType();
     }, [] );
 
     //Variable to check if typography use custom font size or not
