@@ -2,7 +2,7 @@
 Contributors: expresstech, infosatech
 Tags: testimonial, review, testimonial slider, testimonials, client review
 Requires at least: 5.9
-Tested up to: 6.1
+Tested up to: 6.2
 Stable tag: 1.0.1
 Requires PHP: 5.6
 License: GPLv3
